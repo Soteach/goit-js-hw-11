@@ -4,8 +4,14 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import throttle from 'lodash.throttle';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { refs } from './js/refs.js';
-import { rendeElemToHTML } from './js/renderElemToHTML.js';
+
+const refs = {
+  searchForm: document.querySelector('.search-form'),
+  gallery: document.querySelector('.gallery'),
+  loadMore: document.querySelector('[data-action="load-more"]'),
+  btnPrimary: document.querySelector('btn-primary'),
+  reciveMsg: document.createElement('p'),
+};
 
 const newsApiServer = new NewsApiServer();
 const galleryLigthbox = new SimpleLightbox('.gallery a');
@@ -77,42 +83,42 @@ function onLoadMoreImg() {
   });
 }
 
-// function rendeElemToHTML(hits) {
-//   const gallery = hits
-//     .map(
-//       ({
-//         webformatURL,
-//         largeImageURL,
-//         tags,
-//         likes,
-//         views,
-//         comments,
-//         downloads,
-//       }) => {
-//         return `<li class="photo-card">
-//                     <div class="card-item">
-//                             <a href="${largeImageURL}" class="gallery__image">
-//                                 <img src="${webformatURL}" alt="${tags}" loading="lazy" width="190">
-//                             </a>
-//                             <ul class="info">
-//                                 <li class="info-item">
-//                                     <b>Likes</b><br>${likes}
-//                                 </li>
-//                                 <li class="info-item">
-//                                     <b>Views</b><br>${views}
-//                                 </li>
-//                                 <li class="info-item">
-//                                     <b>Comments</b><br>${comments}
-//                                 </li>
-//                                 <li class="info-item">
-//                                     <b>Downloads</b><br>${downloads}
-//                                 </li>
-//                             </ul>
-//                     </div>
-//                 </li>`;
-//       }
-//     )
-//     .join('');
-//   refs.gallery.insertAdjacentHTML('beforeend', gallery);
-//   galleryLigthbox.refresh();
-// }
+function rendeElemToHTML(hits) {
+  const gallery = hits
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => {
+        return `<li class="photo-card">
+                    <div class="card-item">
+                            <a href="${largeImageURL}" class="gallery__image">
+                                <img src="${webformatURL}" alt="${tags}" loading="lazy" width="190">
+                            </a>
+                            <ul class="info">
+                                <li class="info-item">
+                                    <b>Likes</b><br>${likes}
+                                </li>
+                                <li class="info-item">
+                                    <b>Views</b><br>${views}
+                                </li>
+                                <li class="info-item">
+                                    <b>Comments</b><br>${comments}
+                                </li>
+                                <li class="info-item">
+                                    <b>Downloads</b><br>${downloads}
+                                </li>
+                            </ul>
+                    </div>
+                </li>`;
+      }
+    )
+    .join('');
+  refs.gallery.insertAdjacentHTML('beforeend', gallery);
+  galleryLigthbox.refresh();
+}
